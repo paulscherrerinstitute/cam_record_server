@@ -1,4 +1,7 @@
-class CamRecordInstanceManager(object):
+from cam_server.instance_management.management import InstanceManager, InstanceWrapper
+
+
+class CamRecordInstanceManager(InstanceManager):
 
     def __init__(self, cam_client, config_manager):
         self.cam_client = cam_client
@@ -39,11 +42,32 @@ class CamRecordInstanceManager(object):
         pass
 
     def get_camera_info(self, camera_name):
-        pass
+        return {"config": None,
+                "running": False,
+                "statistics": None}
 
     def start_camera(self, camera_name):
-        pass
+
+        if self.is_instance_present(camera_name):
+            instance = self.get_instance(camera_name)
+
+            if instance.is_running():
+                return
+            else:
+                self.delete_instance(camera_name)
+
+        camera = self.config_manager.get_camera(camera_name)
+        instance = CamRecordInstance(camera)
+
+        self.add_instance(camera_name, instance)
+        self.start_instance(instance)
 
     def stop_camera(self, camera_name):
-        pass
+        if self.is_instance_present(camera_name):
+            self.stop_instance(camera_name)
+            self.delete_instance(camera_name)
 
+
+class CamRecordInstance(InstanceWrapper):
+    def __init__(self, camera):
+        self.camera = camera

@@ -9,7 +9,7 @@ from cam_server.instance_management.configuration import ConfigFileStorage
 
 from cam_record_server import config
 from cam_record_server.configuration import CamRecordConfigManager
-from cam_record_server.manager import CamRecordInstanceManager
+from cam_record_server.management import CamRecordInstanceManager
 from cam_record_server.rest_api.rest_server import register_rest_interface
 
 _logger = logging.getLogger(__name__)
