@@ -1,0 +1,16 @@
+[Unit]
+Description=cam_record_server service
+After=docker.service
+Requires=docker.service
+
+[Install]
+WantedBy=default.target
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill cam_record_server
+ExecStartPre=-/usr/bin/docker rm cam_record_server
+ExecStartPre=/usr/bin/docker pull docker.psi.ch:5000/cam_record_server
+ExecStart=/usr/bin/docker run --name cam_record_server --env-file /cam_server_configuration/camera_environment -v /cam_server_configuration/configuration:/configuration --net=host docker.psi.ch:5000/cam_record_server cam_record_server -d /configuration/record_config -n sf-daqsync-02.psi.ch --log_level=WARNING
+ExecStop=/usr/bin/docker stop cam_record_server
+Restart=always
