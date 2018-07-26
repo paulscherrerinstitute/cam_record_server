@@ -49,9 +49,20 @@ class CamRecordInstanceManager(InstanceManager):
             self.stop_camera(camera_name)
 
     def get_camera_info(self, camera_name):
-        return {"config": None,
-                "running": False,
-                "statistics": None}
+        camera_config = self.config_manager.get_camera_config(camera_name)
+
+        is_running = False
+        info = None
+
+        if self.is_instance_present(camera_name):
+            camera_instance = self.get_instance(camera_name)
+
+            is_running = camera_instance.is_running()
+            info = camera_instance.get_info()
+
+        return {"config": camera_config,
+                "is_running": is_running,
+                "info": info}
 
     def start_camera(self, camera_name):
 
@@ -80,3 +91,7 @@ class CamRecordInstance(InstanceWrapper):
         super(CamRecordInstance, self).__init__(camera.get_name(), record_process_function,
                                                 camera)
         self.camera = camera
+
+    def get_info(self):
+        # TODO: Return some info on this instance.
+        pass
