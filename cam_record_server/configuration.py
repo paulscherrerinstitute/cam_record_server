@@ -3,6 +3,23 @@ class CamRecordConfigManager(object):
     def __init__(self, config_provider):
         self.config_provider = config_provider
 
+    def get_camera_list(self):
+        pass
+
+    def get_camera_config(self, camera_name):
+        pass
+
+    def save_camera_config(self, camera_name, configuration):
+        pass
+
+    def delete_camera_config(self, camera_name):
+        pass
+
+    def get_camera(self, camera_name):
+        camera_config = self.get_camera_config(camera_name)
+
+        return CamRecordConfig(camera_name, camera_config)
+
 
 class CamRecordConfig(object):
 
