@@ -38,10 +38,15 @@ class CamRecordInstanceManager(InstanceManager):
         pass
 
     def start_all_cameras(self):
-        pass
+        for camera_name in self.config_manager.get_camera_list():
+            camera = self.config_manager.get_camera(camera_name)
+
+            if camera.is_auto_start():
+                self.start_camera(camera_name)
 
     def stop_all_cameras(self):
-        pass
+        for camera_name in self.instances.keys():
+            self.stop_camera(camera_name)
 
     def get_camera_info(self, camera_name):
         return {"config": None,
