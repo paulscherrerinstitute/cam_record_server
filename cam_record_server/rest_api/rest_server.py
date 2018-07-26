@@ -52,15 +52,19 @@ def register_rest_interface(app, instance_manager, api_prefix=None):
 
     @app.put(api_prefix + "/server")
     def start_all_cameras():
+        instance_manager.start_all_cameras()
+
         return {"state": "ok",
                 "status": "Cameras started.",
-                "info": instance_manager.start_all_cameras()}
+                "info": instance_manager.get_server_info()}
 
     @app.delete(api_prefix + "/server")
     def stop_all_cameras():
+        instance_manager.stop_all_cameras()
+
         return {"state": "ok",
                 "status": "Cameras stopped.",
-                "info": instance_manager.stop_all_cameras()}
+                "info": instance_manager.get_server_info()}
 
     @app.get(api_prefix + "/server/<camera_name>")
     def get_camera_info(camera_name):
@@ -74,7 +78,7 @@ def register_rest_interface(app, instance_manager, api_prefix=None):
 
         return {"state": "ok",
                 "status": "Camera %s stream started." % camera_name,
-                "info": instance_manager.start_camera(camera_name)}
+                "info": instance_manager.get_camera_info(camera_name)}
 
     @app.delete(api_prefix + '/server/<camera_name>')
     def stop_camera(camera_name):
@@ -82,7 +86,7 @@ def register_rest_interface(app, instance_manager, api_prefix=None):
 
         return {"state": "ok",
                 "status": "Camera %s stream stopped." % camera_name,
-                "info": instance_manager.stop_camera(camera_name)}
+                "info": instance_manager.get_camera_info(camera_name)}
 
     @app.error(405)
     def method_not_allowed(res):
