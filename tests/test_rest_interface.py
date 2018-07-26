@@ -4,18 +4,20 @@ import unittest
 from multiprocessing import Process
 from time import sleep
 
-from cam_record_server import config, start_cam_record_server
+from cam_record_server import config
 from cam_record_server.rest_api.rest_client import CamRecordClient
-
+from cam_record_server.start_cam_record_server import start_record_server
 
 # TODO: Mock the instance manager.
+
+
 class TestRestInterface(unittest.TestCase):
     def setUp(self):
         self.host = "0.0.0.0"
         self.port = config.DEFAULT_API_PORT
 
-        self.process = Process(target=start_cam_record_server,
-                               args=(self.host, self.port, "config_dir", "localhost"))
+        self.process = Process(target=start_record_server,
+                               args=(self.host, self.port, ".", "localhost"))
         self.process.start()
 
         # Give it some time to start.
@@ -35,10 +37,12 @@ class TestRestInterface(unittest.TestCase):
         # TODO: Actually test something.
 
         camera_name = "simulation"
+        config_to_save = {}
 
         cameras = self.client.get_camera_list()
+
         config = self.client.get_camera_config(camera_name)
-        config = self.client.save_camera_config(camera_name)
+        config = self.client.save_camera_config(camera_name, config_to_save)
         config = self.client.delete_camera_config(camera_name)
 
         camera_info = self.client.get_camera_info(camera_name)

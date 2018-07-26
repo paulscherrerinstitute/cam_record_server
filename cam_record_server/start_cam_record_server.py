@@ -13,7 +13,7 @@ from cam_record_server.rest_api.rest_server import register_rest_interface
 _logger = logging.getLogger(__name__)
 
 
-def start_cam_record_server(host, port, config_directory, cam_server_api_address, hostname=None):
+def start_record_server(host, port, config_directory, cam_server_api_address, hostname=None):
 
     if not os.path.isdir(config_directory):
         _logger.error("Configuration directory '%s' does not exist." % config_directory)
