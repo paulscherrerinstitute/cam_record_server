@@ -60,7 +60,7 @@ class CamRecordInstanceManager(InstanceManager):
                 self.delete_instance(camera_name)
 
         camera = self.config_manager.get_camera(camera_name)
-        instance = CamRecordInstance(camera, config.FEEDBACK_ZMQ_PORT)
+        instance = CamRecordInstance(camera)
 
         self.add_instance(camera_name, instance)
         self.start_instance(instance)
@@ -72,7 +72,7 @@ class CamRecordInstanceManager(InstanceManager):
 
 
 class CamRecordInstance(InstanceWrapper):
-    def __init__(self, camera, feedback_zmq_port):
+    def __init__(self, camera):
         super(CamRecordInstance, self).__init__(camera.get_name(), record_process_function,
-                                                camera, feedback_zmq_port)
+                                                camera)
         self.camera = camera
