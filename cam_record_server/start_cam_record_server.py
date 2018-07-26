@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+from threading import Thread
 
 import bottle
 
@@ -11,6 +12,7 @@ from cam_record_server import config
 from cam_record_server.configuration import CamRecordConfigManager
 from cam_record_server.management import CamRecordInstanceManager
 from cam_record_server.rest_api.rest_server import register_rest_interface
+from cam_record_server.watcher import watch_instances
 
 _logger = logging.getLogger(__name__)
 
@@ -29,6 +31,7 @@ def start_record_server(host, port, config_directory, cam_server_api_address, ho
     config_manager = CamRecordConfigManager(config_provider=ConfigFileStorage(config_directory))
 
     instance_manager = CamRecordInstanceManager(cam_client=cam_client, config_manager=config_manager)
+    instance_manager.start_all_cameras()
 
     register_rest_interface(app, instance_manager)
 

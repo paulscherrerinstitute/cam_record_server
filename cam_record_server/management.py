@@ -1,6 +1,5 @@
 from cam_server.instance_management.management import InstanceManager, InstanceWrapper
 
-from cam_record_server import config
 from cam_record_server.process import record_process_function
 
 
