@@ -33,7 +33,7 @@ def start_cam_record_server(host, port, config_directory, cam_server_api_address
 def main():
     parser = argparse.ArgumentParser(description='Camera record server')
     parser.add_argument("-c", '--cam_server', default="http://0.0.0.0:8888", help="Cam server rest api address.")
-    parser.add_argument('-p', '--port', default=8889, help="Server port")
+    parser.add_argument('-p', '--port', default=config.DEFAULT_API_PORT, help="Server port")
     parser.add_argument('-i', '--interface', default='0.0.0.0', help="Hostname interface to bind to")
     parser.add_argument('-d', '--directory', default=config.DEFAULT_RECORD_CONFIG_FOLDER,
                         help="Record configuration base directory")
