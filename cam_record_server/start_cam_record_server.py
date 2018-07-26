@@ -6,7 +6,10 @@ import os
 import bottle
 
 from cam_server import CamClient
+from cam_server.instance_management.configuration import ConfigFileStorage
+
 from cam_record_server import config
+from cam_record_server.configuration import CamRecordConfigManager
 from cam_record_server.manager import CamRecordInstanceManager
 from cam_record_server.rest_api.rest_server import register_rest_interface
 
@@ -25,7 +28,9 @@ def start_record_server(host, port, config_directory, cam_server_api_address, ho
     app = bottle.Bottle()
 
     cam_client = CamClient(cam_server_api_address)
-    instance_manager = CamRecordInstanceManager(cam_client)
+    config_manager = CamRecordConfigManager(config_provider=ConfigFileStorage(config_directory))
+
+    instance_manager = CamRecordInstanceManager(cam_client=cam_client, config_manager=config_manager)
 
     register_rest_interface(app, instance_manager)
 

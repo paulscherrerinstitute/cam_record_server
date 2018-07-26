@@ -1,7 +1,8 @@
 class CamRecordInstanceManager(object):
 
-    def __init__(self, cam_client):
+    def __init__(self, cam_client, config_manager):
         self.cam_client = cam_client
+        self.config_manager = config_manager
 
     def get_camera_list(self):
         pass
