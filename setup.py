@@ -6,7 +6,7 @@ setup(name="cam_record_server",
       maintainer_email="daq@psi.ch",
       author="Paul Scherrer Institute",
       author_email="daq@psi.ch",
-      description="Camera server for recording images in the image buffer.",
+      description="Camera server for sending images in the image buffer.",
 
       license="GPL3",
 
