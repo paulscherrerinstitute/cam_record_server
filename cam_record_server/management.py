@@ -35,7 +35,7 @@ class CamRecordInstanceManager(InstanceManager):
         return deleted_config
 
     def get_server_info(self):
-        pass
+        return self.get_info()
 
     def start_all_cameras(self):
         for camera_name in self.config_manager.get_camera_list():
