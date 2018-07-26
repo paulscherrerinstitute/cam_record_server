@@ -2,7 +2,6 @@ import argparse
 import logging
 import os
 
-
 import bottle
 
 from cam_server import CamClient
@@ -17,7 +16,6 @@ _logger = logging.getLogger(__name__)
 
 
 def start_record_server(host, port, config_directory, cam_server_api_address, hostname=None):
-
     if not os.path.isdir(config_directory):
         _logger.error("Configuration directory '%s' does not exist." % config_directory)
         exit(-1)
@@ -57,8 +55,8 @@ def main():
 
     logging.basicConfig(level=arguments.log_level)
 
-    start_cam_record_server(arguments.interface, arguments.port, arguments.directory, arguments.cam_server,
-                            arguments.hostname)
+    start_record_server(arguments.interface, arguments.port, arguments.directory, arguments.cam_server,
+                        arguments.hostname)
 
 
 if __name__ == "__main__":
