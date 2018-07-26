@@ -5,16 +5,22 @@ class CamRecordInstanceManager(object):
         self.config_manager = config_manager
 
     def get_camera_list(self):
-        pass
+        return self.config_manager.get_camera_list()
 
     def get_camera_config(self, camera_name):
-        pass
+        return self.config_manager.get_camera_config(camera_name)
 
     def save_camera_config(self, camera_name, configuration):
-        pass
+        self.config_manager.save_camera_config(camera_name, configuration)
+
+        return self.get_camera_config(camera_name)
 
     def delete_camera_config(self, camera_name):
-        pass
+        deleted_config = self.config_manager.get_camera_config(camera_name)
+
+        self.config_manager.delete_camera_config(camera_name)
+
+        return deleted_config
 
     def get_server_info(self):
         pass
