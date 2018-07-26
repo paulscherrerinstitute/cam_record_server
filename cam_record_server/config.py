@@ -1,0 +1,3 @@
+DEFAULT_LOGGING_LEVEL = "WARNING"
+DEFAULT_RECORD_CONFIG_FOLDER = "configuration/record_config"
+
