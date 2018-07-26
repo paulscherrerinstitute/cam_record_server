@@ -55,3 +55,9 @@ class CamRecordConfig(object):
         if error:
             error += "Config: %s" % configuration
             raise ValueError(error)
+
+    def is_auto_start(self):
+        return self.configuration["auto_start"]
+
+    def get_config(self):
+        return self.configuration

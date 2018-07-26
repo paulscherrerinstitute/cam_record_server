@@ -13,11 +13,18 @@ class CamRecordInstanceManager(object):
     def save_camera_config(self, camera_name, configuration):
         self.config_manager.save_camera_config(camera_name, configuration)
 
-        return self.get_camera_config(camera_name)
+        camera = self.config_manager.get_camera(camera_name)
+
+        if camera.is_auto_start():
+            self.stop_camera(camera_name)
+            self.start_camera(camera_name)
+
+        return camera.get_config()
 
     def delete_camera_config(self, camera_name):
         deleted_config = self.config_manager.get_camera_config(camera_name)
 
+        self.stop_camera(camera_name)
         self.config_manager.delete_camera_config(camera_name)
 
         return deleted_config
