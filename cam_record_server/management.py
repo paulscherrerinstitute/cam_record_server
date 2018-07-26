@@ -1,5 +1,8 @@
 from cam_server.instance_management.management import InstanceManager, InstanceWrapper
 
+from cam_record_server import config
+from cam_record_server.process import record_process_function
+
 
 class CamRecordInstanceManager(InstanceManager):
 
@@ -57,7 +60,7 @@ class CamRecordInstanceManager(InstanceManager):
                 self.delete_instance(camera_name)
 
         camera = self.config_manager.get_camera(camera_name)
-        instance = CamRecordInstance(camera)
+        instance = CamRecordInstance(camera, config.FEEDBACK_ZMQ_PORT)
 
         self.add_instance(camera_name, instance)
         self.start_instance(instance)
@@ -69,5 +72,7 @@ class CamRecordInstanceManager(InstanceManager):
 
 
 class CamRecordInstance(InstanceWrapper):
-    def __init__(self, camera):
+    def __init__(self, camera, feedback_zmq_port):
+        super(CamRecordInstance, self).__init__(camera.get_name(), record_process_function,
+                                                camera, feedback_zmq_port)
         self.camera = camera

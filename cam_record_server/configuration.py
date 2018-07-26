@@ -61,3 +61,6 @@ class CamRecordConfig(object):
 
     def get_config(self):
         return self.configuration
+
+    def get_name(self):
+        return self.camera_name
