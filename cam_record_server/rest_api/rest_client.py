@@ -78,6 +78,26 @@ class CamRecordClient(object):
 
         return validate_response(server_response)["info"]
 
+    def start_all_cameras(self):
+        """
+        Start all cameras.
+        :return: Server info.
+        """
+        rest_endpoint = "/server"
+
+        server_response = requests.put(self.api_address_format % rest_endpoint).json()
+        return validate_response(server_response)["info"]
+
+    def stop_all_cameras(self):
+        """
+        Stop all cameras.
+        :return: Server info.
+        """
+        rest_endpoint = "/server"
+
+        server_response = requests.delete(self.api_address_format % rest_endpoint).json()
+        return validate_response(server_response)["info"]
+
     def get_camera_info(self, camera_name):
         """
         Return the info of the camera instance. For administrative purposes only.
@@ -97,7 +117,7 @@ class CamRecordClient(object):
         rest_endpoint = "/server/%s" % camera_name
 
         server_response = requests.put(self.api_address_format % rest_endpoint).json()
-        validate_response(server_response)["info"]
+        return validate_response(server_response)["info"]
 
     def stop_camera(self, camera_name):
         """
@@ -108,4 +128,4 @@ class CamRecordClient(object):
         rest_endpoint = "/server/%s" % camera_name
 
         server_response = requests.delete(self.api_address_format % rest_endpoint).json()
-        validate_response(server_response)
+        return validate_response(server_response)["info"]

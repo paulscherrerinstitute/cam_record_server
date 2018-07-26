@@ -50,6 +50,18 @@ def register_rest_interface(app, instance_manager, api_prefix=None):
                 "status": "Server info.",
                 "info": instance_manager.get_server_info()}
 
+    @app.put(api_prefix + "/server")
+    def start_all_cameras():
+        return {"state": "ok",
+                "status": "Cameras started.",
+                "info": instance_manager.start_all_cameras()}
+
+    @app.delete(api_prefix + "/server")
+    def stop_all_cameras():
+        return {"state": "ok",
+                "status": "Cameras stopped.",
+                "info": instance_manager.stop_all_cameras()}
+
     @app.get(api_prefix + "/server/<camera_name>")
     def get_camera_info(camera_name):
         return {"state": "ok",
