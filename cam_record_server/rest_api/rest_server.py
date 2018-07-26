@@ -62,7 +62,7 @@ def register_rest_interface(app, instance_manager, api_prefix=None):
 
         return {"state": "ok",
                 "status": "Camera %s stream started." % camera_name,
-                "info": instance_manager.get_camera_info(camera_name)}
+                "info": instance_manager.start_camera(camera_name)}
 
     @app.delete(api_prefix + '/server/<camera_name>')
     def stop_camera(camera_name):
@@ -70,7 +70,7 @@ def register_rest_interface(app, instance_manager, api_prefix=None):
 
         return {"state": "ok",
                 "status": "Camera %s stream stopped." % camera_name,
-                "info": instance_manager.get_camera_info(camera_name)}
+                "info": instance_manager.stop_camera(camera_name)}
 
     @app.error(405)
     def method_not_allowed(res):

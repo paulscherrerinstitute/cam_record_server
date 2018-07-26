@@ -5,6 +5,7 @@ import os
 import bottle
 
 from cam_record_server import config
+from cam_record_server.rest_api.rest_server import register_rest_interface
 
 _logger = logging.getLogger(__name__)
 
@@ -20,14 +21,15 @@ def start_cam_record_server(host, port, config_directory, cam_server_api_address
 
     app = bottle.Bottle()
 
-    # TODO: Register REST interface.
+    # TODO: Create instance manager.
+    instance_manager = None
+
+    register_rest_interface(app, instance_manager)
 
     try:
         bottle.run(app=app, host=host, port=port)
     finally:
-        # Close the external processor when terminating the web server.
-        # TODO
-        pass
+        instance_manager.stop_all_cameras()
 
 
 def main():
